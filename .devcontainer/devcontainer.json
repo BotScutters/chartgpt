@@ -1,0 +1,36 @@
+{
+	"name": "ChartGPT Devcontainer",
+	"dockerComposeFile": ["docker-compose.dev.yml"],
+	"workspaceFolder": "/app",
+	"service": "chartgpt",
+	"postCreateCommand": "cd /app/frontend && npm install && npm run build",
+	"postStartCommand": "cd /app/backend && gunicorn -b :5000 --reload app:app & cd /app/frontend && npm run dev",
+	"customizations": {
+	  "build": {
+		"dockerCompose": {
+		  "buildPolicy": "always"
+		}
+	  },
+	  "vscode": {
+		"settings": {
+		  "terminal.integrated.profiles.linux": { "zsh": { "path": "/bin/zsh" } },
+		  "terminal.integrated.defaultProfile.linux": "zsh"
+		},
+		"extensions": [
+		  "ms-azuretools.vscode-docker",
+		  "ms-python.python",
+		  "ms-python.vscode-pylance",
+		  "janisdd.vscode-edit-csv",
+		  "GitHub.copilot",
+		  "GitHub.vscode-pull-request-github",
+		  "mhutchie.git-graph",
+		  "yzhang.markdown-all-in-one",
+		  "redhat.vscode-yaml",
+		  "eamodio.gitlens",
+		  "genieai.chatgpt-vscode"
+		]
+	  }
+	},
+	"forwardPorts": [5000, 3000]
+  }
+  

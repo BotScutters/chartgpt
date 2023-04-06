@@ -1,0 +1,35 @@
+# Build base image
+FROM chartgpt-combo:latest
+
+# Set the DEBUG environment variable
+ENV ENV development
+
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
+# Install npm
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get install -y nodejs
+
+# Install git, zsh, and oh-my-zsh
+RUN apt-get update && \
+    apt-get install -y git tree zsh && \
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
+    && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
+    && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting \
+    # Install Starship prompt
+    && curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
+
+# Copy .zshrc file into the container
+COPY .zshrc /root/.zshrc
+COPY starship.toml /root/.config/
+
+# Set zsh as the default shell
+RUN echo '[ -f /bin/zsh ] && exec /bin/zsh' >> /root/.bashrc
+SHELL ["/bin/zsh", "-c"]
+
+EXPOSE 3000 5000
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+
+# CMD ["zsh", "-c", "cd /app/backend && gunicorn -b :5000 app:app & cd /app/frontend && npm run dev"]

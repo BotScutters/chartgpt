@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# nextjs files
+frontend/.next
+frontend/build
+
+# nodejs files
+frontend/node_modules
+
+# User
+blog
+app

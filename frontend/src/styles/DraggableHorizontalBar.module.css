@@ -1,0 +1,7 @@
+.bar {
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    cursor: row-resize;
+  }
+  

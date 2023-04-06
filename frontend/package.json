@@ -1,0 +1,28 @@
+{
+    "name": "ChartGPT",
+    "version": "0.0.1",
+    "description": "Your project description",
+    "main": "index.js",
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+    },
+    "keywords": [],
+    "author": "Scott Butters",
+    "license": "MIT",
+    "dependencies": {
+        "autosize": "^6.0.1",
+        "axios": "^1.3.5",
+        "next": "^13.2.4",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-draggable": "^4.4.5"
+    },
+    "devDependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-next": "^11.1.2",
+        "eslint-plugin-react": "^7.27.0",
+        "prettier": "^2.5.1"
+    }
+}
