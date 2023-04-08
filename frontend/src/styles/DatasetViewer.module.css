@@ -1,10 +1,4 @@
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-    margin: 2rem 0;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-  }
-  
+  position: relative;
+  overflow: hidden;
+}

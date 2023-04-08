@@ -1,0 +1,16 @@
+.container {
+    --draggable-bar-height: 4px;
+    --color-draggable-bar: #ccc;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .chartViewer,
+  .datasetViewer,
+  .conversationViewer {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  

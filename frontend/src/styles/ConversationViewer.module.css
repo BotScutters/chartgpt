@@ -1,21 +1,15 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2rem 0;
-  }
+  position: relative;
+  overflow: hidden;
+}
 
   .conversationContainer {
-    /* display: flex;
-    flex-direction: column; */
     width: 100%;
     position: relative;
     flex-grow: 1;
   }
     
   .conversationBox {
-    /* display: flex;
-    flex-direction: column; */
     width: 100%;
     margin-bottom: 0.5rem;
     background-color: #f5f5f5;
@@ -25,46 +19,7 @@
     min-height: calc(1rem * 2); /* Minimum height 2rem */
     max-height: calc(1rem * 15); /* Maximum height 15rem */
   }
-  
-  .inputContainer {
-    display: flex;
-    align-items: flex-end;
-    position: relative;
-    margin-top: 0.5rem;
-    width: 100%;
-  }
-  
-  .userInput {
-    flex-grow: 1;
-    resize: none;
-    overflow: auto;
-    max-width: calc(100% - 40px);
-    max-height: 72px; /* Adjust based on your line height and font size */
-    width: calc(100% - 40px); /* Adjust based on the submitButton size and margin */
-    margin-right: 8px;
-  }
-  
-  .submitButton {
-    background-color: #0070f3;
-    border: none;
-    border-radius: 50%;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-    height: 32px;
-    width: 32px;
-    outline: none;
-    padding: 0;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    text-align: center;
-  }
-  
-  .submitButton:hover {
-    background-color: #0051b7;
-  }
-  
+
   .userMessage {
     color: #0070f3;
   }

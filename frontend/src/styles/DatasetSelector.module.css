@@ -1,4 +1,5 @@
 .container {
+    height: var(--dataset-selector-height);
     display: flex;
     align-items: center;
     justify-content: center;
