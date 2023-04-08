@@ -15,10 +15,11 @@ The user interface is a single page webapp that allows users to upload a dataset
 - Dataset Viewer
   - A table to display a preview of the dataset. 
     - The table is initially empty, and is populated with the dataset when the user selects a dataset to use.
-    - The table is dynamic, and will act as an access point to a Pandas dataframe on the backend.
+    - The table is dynamic and interactive, and will act as an access point to a tabular dataset.
     - The user can perform basic operations on the table, such as sorting, filtering, hiding/showing/rearranging columns. The table will show 5 rows by default, but the user can change this number, and advance to the next 5 rows, by using the pagination controls at the bottom of the table.
 - Conversation Viewer
   - A text box for the app to display a conversation history between the user and the app. Each time the user submits a request, the app will display the request in the text box, and the response to the request below it.
+- Request Box
   - A text box below that for the user to enter their requests.
   - A button to submit the request.
 
@@ -36,7 +37,7 @@ The server is locally hosted and runs on port 5000.
 1. User uploads a dataset to the app.
 2. A backend process loads the dataset, automatically generates a schema for it, and displays a preview of the dataset in the dataset viewer.
 3. The user enters a request for a chart in the text box.
-4. The user clicks the Send button.
+4. The user hits enter or clicks the Submit button.
 5. The user's request is displayed in the conversation viewer.
 6. The backend wraps the request with a prompt for the OpenAI API, supplying it with context about the dataset and the app itself.
 7. The backend sends the request to the OpenAI API.
@@ -48,8 +49,10 @@ The server is locally hosted and runs on port 5000.
 The app is built using the following technologies:
 - Frontend
   - React - Javascript library for building user interfaces
-  - Bootstrap - CSS framework for styling the user interface
+  - Next.js - React framework for server-side rendering and static site generation
 - Backend
   - Flask - Python web framework
-  - Pandas - Python library for data manipulation and analysis
+  - gunicorn - Python WSGI HTTP Server for UNIX
+  - pandas - Python library for data manipulation and analysis
   - OpenAI API - API for accessing GPT-3
+The entire app is packaged into a Docker container. The app also contains a VSCode devcontainer configuration for local development.
