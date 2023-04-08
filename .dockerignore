@@ -1,0 +1,22 @@
+# backend
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+.Python
+env/
+venv/
+*.log
+*.sqlite
+
+# frontend
+node_modules
+npm-debug.log
+yarn-error.log
+.cache
+.next
+
+# general
+.DS_Store
+.DS_Store?
