@@ -1,9 +1,10 @@
+// components/DatasetSelector.js
 import React from 'react';
 import styles from '../styles/DatasetSelector.module.css';
 
-const DatasetSelector = () => {
+const DatasetSelector = React.forwardRef((props, ref) => {
   return (
-    <div className={styles.container}>
+    <div ref={ref} className={styles.container}>
       <select className={styles.dropdown} defaultValue="">
         <option value="" disabled>
           Select a dataset
@@ -13,6 +14,6 @@ const DatasetSelector = () => {
       <button className={styles.addButton}>Add Dataset</button>
     </div>
   );
-};
+});
 
 export default DatasetSelector;

@@ -2,9 +2,9 @@ import React, { useRef, useEffect } from 'react';
 import styles from '../styles/UserInputBox.module.css';
 import autosize from 'autosize';
 
-const UserInputBox = ({ handleChartRequest }) => {
+const UserInputBox = React.forwardRef(({ handleChartRequest }, ref) => {
   const requestInput = useRef();
-  const containerRef = useRef();
+  const containerRef = ref || useRef();
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -36,7 +36,7 @@ const UserInputBox = ({ handleChartRequest }) => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div ref={containerRef} className={styles.container}>
       <textarea
         ref={requestInput}
         className={styles.userInput}
@@ -44,11 +44,13 @@ const UserInputBox = ({ handleChartRequest }) => {
         onKeyDown={handleKeyDown}
         rows={2}
       />
-      <button className={styles.submitButton} onClick={() => handleChartRequest(requestInput.current.value)}>
+      <button
+        className={styles.submitButton}
+        onClick={() => handleChartRequest(requestInput.current.value)}>
         📊
       </button>
     </div>
   );
-};
+});
 
 export default UserInputBox;

@@ -1,24 +1,17 @@
 .container {
   position: relative;
-  overflow: hidden;
+  width: 100%;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  height: 100%;
 }
 
-  .conversationContainer {
-    width: 100%;
-    position: relative;
-    flex-grow: 1;
-  }
-    
-  .conversationBox {
-    width: 100%;
-    margin-bottom: 0.5rem;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    white-space: pre-wrap;
-    overflow-y: auto;
-    min-height: calc(1rem * 2); /* Minimum height 2rem */
-    max-height: calc(1rem * 15); /* Maximum height 15rem */
-  }
+.conversationBox {
+  width: 100%;
+}
 
   .userMessage {
     color: #0070f3;
@@ -27,4 +20,3 @@
   .chartGPTMessage {
     color: #333;
   }
-  

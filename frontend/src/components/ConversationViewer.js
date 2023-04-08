@@ -1,3 +1,4 @@
+// components/ConversationViewer.js
 import React, { useRef, useEffect } from 'react';
 import styles from '../styles/ConversationViewer.module.css';
 
@@ -11,8 +12,8 @@ const ConversationViewer = ({ conversation }) => {
   }, [conversation]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.conversationBox} ref={conversationBox}>
+    <div className={styles.container} ref={conversationBox}>
+      <div className={styles.conversationBox}>
         {conversation.map((entry, index) => (
           <p key={index} className={entry.sender === 'You' ? styles.userMessage : styles.chartGPTMessage}>
             <strong>{entry.sender}:</strong> {entry.message}

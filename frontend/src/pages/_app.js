@@ -1,6 +1,6 @@
+// pages/_app.js
 import React, { useState, useRef } from 'react';
 import Navbar from '../components/Navbar';
-import DatasetSelector from '../components/DatasetSelector';
 import DynamicHeightContainer from '../components/DynamicHeightContainer';
 import UserInputBox from '../components/UserInputBox';
 import { generateChart } from '../api';
@@ -9,6 +9,9 @@ import '../styles/variables.css';
 
 const App = ({ Component, pageProps }) => {
   const [conversation, setConversation] = useState([]);
+  const navbarRef = useRef(null);
+  const userInputBoxRef = useRef(null);
+
 
   async function handleChartRequest(content) {
     if (content.trim() === '') return;
@@ -35,10 +38,12 @@ const App = ({ Component, pageProps }) => {
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-        <Navbar />
-        <DatasetSelector />
-        <DynamicHeightContainer conversation={conversation} handleChartRequest={handleChartRequest} />
-        <UserInputBox handleChartRequest={handleChartRequest} />
+        <Navbar ref={navbarRef} />
+        <DynamicHeightContainer 
+          conversation={conversation}
+          outerRefs={[navbarRef, userInputBoxRef]}
+        />
+        <UserInputBox ref={userInputBoxRef} handleChartRequest={handleChartRequest} />
       </div>
     </>
   );

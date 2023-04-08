@@ -7,13 +7,13 @@ import { useState } from 'react';
  * @param {number} numContainers - The number of subcontainers.
  * @param {number[]} initialSizes - An array of initial sizes for the subcontainers (in percentages).
  * @param {number} minHeight - The minimum height for each subcontainer (in percentages).
- * @param {React.RefObject} containerRef - A reference to the container element.
+ * @param {number} totalContainerHeight - The total height of the dynamic height container, in pixels.
  * @returns {[number[], (sliderIndex: number, deltaY: number) => number]} - An array containing the current container sizes and a function to handle resizing.
  */
-export const useDynamicHeightContainer = (numContainers, initialSizes, minHeight, containerRef) => {
+export const useDynamicHeightContainer = (numContainers, initialSizes, minHeight, totalContainerHeight) => {
     const [containerSizes, setContainerSizes] = useState(initialSizes);
     const minSize = minHeight;
-    const maxSize = 100 - minSize * (numContainers - 1);
+    const maxSize = 100 - minHeight * (numContainers - 1);
 
     /**
      * Handles resizing containers when a slider is dragged.
@@ -23,8 +23,7 @@ export const useDynamicHeightContainer = (numContainers, initialSizes, minHeight
      * @returns {number} - The actual change in the slider's vertical position after clamping container sizes.
      */
     const handleResize = (sliderIndex, deltaY) => {
-        const containerHeight = containerRef.current.clientHeight;
-        const deltaYPerc = (deltaY / containerHeight) * 100;
+        const deltaYPerc = (deltaY / totalContainerHeight) * 100;
         const newContainerSizes = [...containerSizes];
 
         /**
@@ -79,7 +78,7 @@ export const useDynamicHeightContainer = (numContainers, initialSizes, minHeight
         const appliedDeltaBehind = adjustContainer(
             sliderIndex + !deltaPos, -appliedDeltaAhead);
         setContainerSizes(newContainerSizes);
-        const finalDeltaY = -direction * appliedDeltaAhead * (containerHeight / 100);
+        const finalDeltaY = -direction * appliedDeltaAhead * (totalContainerHeight / 100);
         return finalDeltaY;
     };
 
