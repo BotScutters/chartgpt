@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import requests
 import sys
+import traceback
 import xml.etree.ElementTree as ET
 import zipfile
 from loguru import logger
@@ -12,9 +13,12 @@ from pathlib import Path
 
 UCI_DATASETS_BASE_URL = "https://archive.ics.uci.edu/ml/machine-learning-databases/"
 DATASETS = {
-    "Bank Marketing": f"{UCI_DATASETS_BASE_URL}00222/bank.zip",
+    "Lyft Bay Wheels": "https://s3.amazonaws.com/baywheels-data/2017-fordgobike-tripdata.csv.zip",
     "Adult Data": f"{UCI_DATASETS_BASE_URL}adult/adult.data",
-    "Online Retail": f"{UCI_DATASETS_BASE_URL}00502/online_retail_II.xlsx"
+    "Bank Marketing": f"{UCI_DATASETS_BASE_URL}00222/bank.zip",
+    "Blood Transfusion": f"{UCI_DATASETS_BASE_URL}blood-transfusion/transfusion.data",
+    "Metro Interstate Traffic": f"{UCI_DATASETS_BASE_URL}00492/Metro_Interstate_Traffic_Volume.csv.gz",
+    "Online Retail": f"{UCI_DATASETS_BASE_URL}00502/online_retail_II.xlsx",
 }
 
 DATA_DIR = Path("data")
@@ -25,6 +29,15 @@ logger.remove()
 logger.add(sys.stderr, level="DEBUG" if is_debug else "INFO")
 
 def load_dataset(dataset_name: str) -> tuple[pd.DataFrame, str]:
+    """Load a dataset from a local file or download it from a URL if it doesn't exist.
+
+    Args:
+        dataset_name (str): The name of the dataset to load.
+
+    Returns:
+        dataseet, preview_data (tuple[pd.DataFrame, str]):
+            A tuple containing the dataset and a preview of the data.
+    """
     if dataset_name in DATASETS:
         dataset_url = DATASETS[dataset_name]
         filename_stem = dataset_name.lower().replace(" ", "_")
@@ -41,6 +54,10 @@ def load_dataset(dataset_name: str) -> tuple[pd.DataFrame, str]:
 
 def download_dataset(url: str, filepath: Path) -> pd.DataFrame:
     logger.info(f"Downloading dataset from {url}")
+    if url.endswith(".data"):
+        df = pd.read_csv(url)
+        df.to_csv(filepath, index=False)
+        return df
     response = requests.get(url)
     if response.status_code != 200:
         logger.error(f"Failed to download dataset from {url}")
@@ -50,6 +67,7 @@ def download_dataset(url: str, filepath: Path) -> pd.DataFrame:
         df.to_csv(filepath, index=False)
         return df
     except Exception as e:
+        traceback.print_exc()
         logger.error(f"Failed to convert dataset to DataFrame: {e}")
         return None
 
@@ -126,7 +144,8 @@ def convert_to_df(response: requests.Response, url: str) -> pd.DataFrame:
 
     raise ValueError(
         "Unable to convert the response content to a DataFrame. "
-        f"Content-Type: {content_type}"
+        f"Content-Type: {content_type}\n"
+        f"{traceback.print_exc()}"
     )
 
 
@@ -142,3 +161,23 @@ def add_dataset(dataset_name: str, dataset_url: str) -> tuple[bool, str]:
 def get_available_datasets() -> list[str]:
     logger.debug("Getting available datasets")
     return list(DATASETS.keys())
+
+
+if __name__ == "__main__":
+    # Tests loading of datasets
+    # 1. Delete all files inside the data directory
+    # 2. Iterate through the datasets in DATASETS and load them
+    # 3. For each, print the head of the DataFrame using pretty print
+
+    import pprint
+
+    for filepath in DATA_DIR.glob("*"):
+        filepath.unlink()
+
+    for dataset_name, url in DATASETS.items():
+        logger.info(f"Loading dataset '{dataset_name}'")
+        df, preview_data = load_dataset(dataset_name)
+        logger.info(f"Preview of dataset '{dataset_name}':")
+        pprint.pprint(df.head())
+        df.to_dict()
+        

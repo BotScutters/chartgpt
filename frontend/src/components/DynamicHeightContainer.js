@@ -53,12 +53,14 @@ const DynamicHeightContainer = ({ conversation, datasetResponse, outerRefs }) =>
   
     const getInitialConversationHeight = (conversation) => {
       if (conversation.length === 0) {
-        return 2 * 1; // The value represents the number of lines (2) multiplied by the line height (1)
+        return 5; // The value represents the number of lines (2) multiplied by the line height (1)
       }
       return 25; // Default initial height when there's content in the conversation
     };
-    
-    const initialSizes = [50, 25, getInitialConversationHeight(conversation)];
+
+    const initialConversationHeight = getInitialConversationHeight(conversation);
+    const initialChartHeight = 100 - initialConversationHeight - 10;
+    const initialSizes = [initialChartHeight, 15, initialConversationHeight];
     const minHeight = 5;
     const [containerSizes, handleResize] = useDynamicHeightContainer(
       initialSizes.length,
@@ -75,7 +77,7 @@ const DynamicHeightContainer = ({ conversation, datasetResponse, outerRefs }) =>
             height: `calc(${containerSizes[0]}% - var(--draggable-bar-height) / 2)`,
           }}
         >
-          <ChartViewer />
+          <ChartViewer datasetResponse={datasetResponse} xName={"start_time"} yName={"duration_sec"} />
         </div>
         <DraggableHorizontalBar onDrag={(deltaY) => handleResize(0, deltaY)} />
         <div

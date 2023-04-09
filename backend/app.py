@@ -15,9 +15,10 @@ CORS(app)
 socketio = SocketIO(app)
 loaded_datasets = {}
 
-is_debug = os.environ.get("DEBUG", "0") == "1"
+is_debug = os.environ.get("ENV", "prod") == "dev"
 logger.remove()
 logger.add(sys.stderr, level="DEBUG" if is_debug else "INFO")
+logger.info(f"Starting app in {'debug' if is_debug else 'production'} mode...")
 
 
 @app.route('/')
@@ -57,6 +58,8 @@ def load_dataset_route():
             }
     if response_data["status"] == "success":
         logger.debug(f"Loaded dataset '{dataset_name}' preview: {preview_data}")
+        logger.debug(f"Dataset columns:\n{dataset.columns}")
+        logger.debug(f"Dataset info:\n{dataset.info()}")
     return jsonify(response_data)
 
 @app.route('/datasets')
