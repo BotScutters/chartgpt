@@ -58,6 +58,7 @@ const App = ({ Component, pageProps }) => {
         <Navbar datasets={datasets} setDatasetResponse={setDatasetResponse} setDatasets={setDatasets} ref={navbarRef} />
         <DynamicHeightContainer 
           conversation={conversation}
+          datasetResponse={datasetResponse}
           outerRefs={[navbarRef, userInputBoxRef]}
         />
         <UserInputBox ref={userInputBoxRef} handleRequest={handleRequest} />

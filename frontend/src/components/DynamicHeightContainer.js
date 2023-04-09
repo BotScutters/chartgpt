@@ -14,10 +14,11 @@ import ConversationViewer from './ConversationViewer';
  *
  * @param {Object} props - The properties passed to the component.
  * @param {Array} props.conversation - The conversation data for the ConversationViewer component.
+ * @param {Object} props.datasetResponse - The dataset response data for the DatasetViewer component.
  * @param {Array} props.outerRefs - The refs to the sibling elements of the container.
  * @returns {JSX.Element} The rendered DynamicHeightContainer component.
  */
-const DynamicHeightContainer = ({ conversation, outerRefs }) => {
+const DynamicHeightContainer = ({ conversation, datasetResponse, outerRefs }) => {
     const containerRef = useRef(null);
     const [dynamicContainerHeight, setDynamicContainerHeight] = useState(0);
   
@@ -83,7 +84,7 @@ const DynamicHeightContainer = ({ conversation, outerRefs }) => {
             height: `calc(${containerSizes[1]}% - var(--draggable-bar-height) / 2)`,
           }}
         >
-          <DatasetViewer />
+          <DatasetViewer datasetResponse={datasetResponse}/>
         </div>
         <DraggableHorizontalBar onDrag={(deltaY) => handleResize(1, deltaY)} />
         <div
