@@ -73,10 +73,10 @@ def add_dataset_route():
     success, message = add_dataset(dataset_name, dataset_url)
     return jsonify({"success": success, "message": message})
 
-@app.route('/generate-chart', methods=['POST'])
-def generate_chart():
+@app.route('/process-request', methods=['POST'])
+def process_request():
     content = request.get_json()['content']
-    logger.debug(f"Request to generate chart: {content}")
+    logger.debug(f"Processing request: {content}")
     try:
         _, response = get_response(content)
         response_data = {
@@ -84,7 +84,7 @@ def generate_chart():
             "response": response,
         }
     except Exception as e:
-        logger.error(f"Error generating chart: {e}")
+        logger.error(f"Error processing request chart: {e}")
         response_data = {
             "status": "error",
             "message": str(e),

@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import DynamicHeightContainer from '../components/DynamicHeightContainer';
 import UserInputBox from '../components/UserInputBox';
-import { generateChart } from '../api';
+import { getDatasets, processRequest } from '../api';
 import '../styles/variables.css';
 
 
@@ -13,13 +13,13 @@ const App = ({ Component, pageProps }) => {
   const userInputBoxRef = useRef(null);
 
 
-  async function handleChartRequest(content) {
+  async function handleRequest(content) {
     if (content.trim() === '') return;
 
     addToConversation('You', content);
 
     try {
-      const response = await generateChart(content);
+      const response = await processRequest(content);
       if (response.status === 'success') {
         addToConversation('ChartGPT', response.response);
       } else {
@@ -43,7 +43,7 @@ const App = ({ Component, pageProps }) => {
           conversation={conversation}
           outerRefs={[navbarRef, userInputBoxRef]}
         />
-        <UserInputBox ref={userInputBoxRef} handleChartRequest={handleChartRequest} />
+        <UserInputBox ref={userInputBoxRef} handleRequest={handleRequest} />
       </div>
     </>
   );

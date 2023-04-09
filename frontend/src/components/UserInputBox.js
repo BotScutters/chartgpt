@@ -1,15 +1,16 @@
+// components/UserInputBox.js
 import React, { useRef, useEffect } from 'react';
 import styles from '../styles/UserInputBox.module.css';
 import autosize from 'autosize';
 
-const UserInputBox = React.forwardRef(({ handleChartRequest }, ref) => {
+const UserInputBox = React.forwardRef(({ handleRequest: handleRequest }, ref) => {
   const requestInput = useRef();
   const containerRef = ref || useRef();
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleChartRequest(requestInput.current.value);
+      handleRequest(requestInput.current.value);
       requestInput.current.value = '';
     }
   };
@@ -46,7 +47,7 @@ const UserInputBox = React.forwardRef(({ handleChartRequest }, ref) => {
       />
       <button
         className={styles.submitButton}
-        onClick={() => handleChartRequest(requestInput.current.value)}>
+        onClick={() => handleRequest(requestInput.current.value)}>
         📊
       </button>
     </div>
